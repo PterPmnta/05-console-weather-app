@@ -1,4 +1,6 @@
 import axios from 'axios';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 export class Busquedas {
     historial = ['Tegucigalpa', 'Madrid', 'San Jose', 'San Francisco'];
@@ -7,8 +9,7 @@ export class Busquedas {
 
     get paramsMapbox() {
         return {
-            access_token:
-                'pk.eyJ1IjoicHRlcnBtbnRhbSIsImEiOiJjbGZzeDE2Y3kwMnMwM2VvbW56OGZzZmpzIn0.6FBPGyvkrOezVvm4xclDjg',
+            access_token: process.env.MAPBOX_KEY,
             limit: 5,
             language: 'es'
         };
