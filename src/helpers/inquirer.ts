@@ -65,13 +65,13 @@ export const leerInput = async (message: string) => {
     return desc;
 };
 
-export const listTaskToDelete = async (tareas: Array<any>) => {
-    const choices = tareas.map((tarea, index: number) => {
+export const placesList = async (lugares: Array<any>) => {
+    const choices = lugares.map((lugar, index: number) => {
         const idx = `${index + 1}.`.green;
 
         return {
-            value: tarea.id,
-            name: `${idx} ${tarea.desc}`
+            value: lugar.id,
+            name: `${idx} ${lugar.name}`
         };
     });
 
@@ -84,7 +84,7 @@ export const listTaskToDelete = async (tareas: Array<any>) => {
         {
             type: 'list',
             name: 'id',
-            message: 'Borrar tarea',
+            message: 'Seleccione un lugar',
             choices
         }
     ];
