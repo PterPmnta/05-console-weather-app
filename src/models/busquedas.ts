@@ -15,7 +15,7 @@ export class Busquedas {
         };
     }
 
-    async getCity(lugar: string) {
+    async getCities(lugar: string) {
         try {
             const urlGeneratedToGetPlaces = axios.create({
                 baseURL: `https://api.mapbox.com/geocoding/v5/mapbox.places/${lugar}.json?proximity=ip&types=place%2Cpostcode%2Caddress`,
@@ -23,8 +23,14 @@ export class Busquedas {
             });
 
             const resp = await urlGeneratedToGetPlaces.get('');
-            console.log(resp.data);
-            return [];
+            return resp.data.features.map((city: any) => {
+                return {
+                    id: city.id,
+                    name: city.place_name,
+                    lng: city.center[0],
+                    lat: city.center[1]
+                };
+            });
         } catch (error) {
             return [];
         }
