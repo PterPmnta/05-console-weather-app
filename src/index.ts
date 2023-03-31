@@ -1,6 +1,11 @@
 import inquirer from 'inquirer';
 import 'colorts/lib/string';
-import { inquirerMenu, leerInput, pausarApp } from './helpers/inquirer';
+import {
+    inquirerMenu,
+    leerInput,
+    pausarApp,
+    placesList
+} from './helpers/inquirer';
 import { Busquedas } from './models/busquedas';
 
 const main = async () => {
@@ -14,12 +19,19 @@ const main = async () => {
         switch (opt) {
             case 1:
                 const lugar = await leerInput('Ciudad:');
-                await busquedas.getCity(lugar);
+                const lugares = await busquedas.getCities(lugar);
+                const placeIdReturned: any = await placesList(lugares);
+
+                const placesChosen = lugares.find(
+                    (lugar: any) => lugar.id === placeIdReturned
+                );
+
+                console.log({ placesChosen });
 
                 console.log('\nInformacion de la ciudad\n'.green);
-                console.log('Ciudad: ');
-                console.log('Lng: ');
-                console.log('Lat: ');
+                console.log('Ciudad: ', placesChosen.name);
+                console.log('Lng: ', placesChosen.lng);
+                console.log('Lat: ', placesChosen.lat);
                 console.log('Temperatura: ');
                 console.log('Temp. Min: ');
                 console.log('Temp. Max: ');
