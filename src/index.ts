@@ -1,4 +1,3 @@
-import inquirer from 'inquirer';
 import 'colorts/lib/string';
 import {
     inquirerMenu,
@@ -22,9 +21,13 @@ const main = async () => {
                 const lugares = await busquedas.getCities(lugar);
                 const placeIdReturned: any = await placesList(lugares);
 
+                if (placeIdReturned === '0') continue;
+
                 const placesChosen = lugares.find(
                     (lugar: any) => lugar.id === placeIdReturned
                 );
+
+                busquedas.addNewPlaceToTheHistory(placesChosen.name);
 
                 const weatherData = await busquedas.getWeatherByPlace(
                     placesChosen.lat,
@@ -41,6 +44,12 @@ const main = async () => {
                 console.log('Temperatura: ', weatherData?.temp);
                 console.log('Temp. Min: ', weatherData?.min);
                 console.log('Temp. Max: ', weatherData?.max);
+                break;
+            case 2:
+                busquedas.capitalizedHistory.forEach((place, index) => {
+                    const idx = `${index + 1}.`.green;
+                    console.log(`${idx} ${place}`);
+                });
                 break;
         }
 
