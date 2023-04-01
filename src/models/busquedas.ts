@@ -1,9 +1,11 @@
 import axios from 'axios';
+import fs from 'fs';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
 export class Busquedas {
     historial = ['Tegucigalpa', 'Madrid', 'San Jose', 'San Francisco'];
+    dbPath = './src/db/historial.json';
 
     constructor() {}
 
@@ -53,8 +55,9 @@ export class Busquedas {
 
             const resp = await urlGeneratedToGetWeather.get('');
             const { weather, main } = resp.data;
+
             return {
-                desc: weather[1].description,
+                desc: weather[0].description || weather[1].description,
                 min: main.temp_min,
                 max: main.temp_max,
                 temp: main.temp
@@ -63,4 +66,21 @@ export class Busquedas {
             console.error(error);
         }
     }
+
+    addNewPlaceToTheHistory(lugar: string) {
+        if (this.historial.includes(lugar.toLocaleLowerCase())) {
+            return;
+        }
+
+        this.historial.unshift(lugar);
+    }
+
+    saveDB() {
+        const payload = {
+            historial: this.historial
+        };
+        fs.writeFileSync(this.dbPath, JSON.stringify(this.historial));
+    }
+
+    readDB() {}
 }
