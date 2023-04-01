@@ -26,15 +26,21 @@ const main = async () => {
                     (lugar: any) => lugar.id === placeIdReturned
                 );
 
-                console.log({ placesChosen });
+                const weatherData = await busquedas.getWeatherByPlace(
+                    placesChosen.lat,
+                    placesChosen.lng
+                );
+
+                console.clear();
 
                 console.log('\nInformacion de la ciudad\n'.green);
                 console.log('Ciudad: ', placesChosen.name);
                 console.log('Lng: ', placesChosen.lng);
                 console.log('Lat: ', placesChosen.lat);
-                console.log('Temperatura: ');
-                console.log('Temp. Min: ');
-                console.log('Temp. Max: ');
+                console.log('Desc: ', weatherData?.desc);
+                console.log('Temperatura: ', weatherData?.temp);
+                console.log('Temp. Min: ', weatherData?.min);
+                console.log('Temp. Max: ', weatherData?.max);
                 break;
         }
 
