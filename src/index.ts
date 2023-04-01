@@ -1,4 +1,3 @@
-import inquirer from 'inquirer';
 import 'colorts/lib/string';
 import {
     inquirerMenu,
@@ -47,7 +46,7 @@ const main = async () => {
                 console.log('Temp. Max: ', weatherData?.max);
                 break;
             case 2:
-                busquedas.historial.forEach((place, index) => {
+                busquedas.capitalizedHistory.forEach((place, index) => {
                     const idx = `${index + 1}.`.green;
                     console.log(`${idx} ${place}`);
                 });
